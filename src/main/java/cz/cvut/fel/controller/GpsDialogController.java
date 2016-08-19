@@ -16,14 +16,17 @@ import java.util.concurrent.atomic.AtomicLong;
 @RestController
 public class GpsDialogController {
 
-    private static final String template = "Hello, %s!";
-    private final AtomicLong counter = new AtomicLong();
+    private static final String USERNAME = "8df4159f-bfda-48f4-9827-c331200caebd";
+    private static final String PASSWORD = "lpULJnXdW2mx";
+    private static final String WORKSPACE_ID = "e3101b6f-4808-4630-afbe-b07744997c20";
+    private static final String CONVERSATION_VERSION = "2016-07-11";
+
 
     @RequestMapping("/initgpsdialog")
     public MessageResponse initDialog() {
 
-        ConversationService service = new ConversationService("2016-07-11");
-        service.setUsernameAndPassword("8df4159f-bfda-48f4-9827-c331200caebd", "lpULJnXdW2mx");
+        ConversationService service = new ConversationService(CONVERSATION_VERSION);
+        service.setUsernameAndPassword(USERNAME, PASSWORD);
 
         MessageRequest newMessage = new MessageRequest.Builder()
                 .inputText("")
@@ -31,7 +34,7 @@ public class GpsDialogController {
                 //.context(...)
                 .build();
 
-        String workspaceId = "e3101b6f-4808-4630-afbe-b07744997c20";
+        String workspaceId = WORKSPACE_ID;
 
         MessageResponse response = service
                 .message(workspaceId, newMessage)
@@ -40,7 +43,7 @@ public class GpsDialogController {
         System.out.println(response);
 
         try {
-            // Your code goes here
+
         } catch (IllegalArgumentException e) {
             // Missing or invalid parameter
         } catch (BadRequestException e) {
@@ -50,7 +53,6 @@ public class GpsDialogController {
         } catch (InternalServerErrorException e) {
             // Internal Server Error
         }
-
 
         return response;
     }

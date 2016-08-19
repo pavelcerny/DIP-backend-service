@@ -37,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
-public class GpsDialogControllerTests {
+public class PoiDialogControllerTests {
 
     @Autowired
     private WebApplicationContext ctx;
@@ -52,7 +52,7 @@ public class GpsDialogControllerTests {
     @Test
     public void noInputInitShouldReturnInitialResponse() throws Exception {
 
-        this.mockMvc.perform(get("/initgpsdialog"))
+        this.mockMvc.perform(get("/poidialog/init"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.output.text[0]").value("Vítej příteli, na jakou cílovou adresu chceš navést?"));

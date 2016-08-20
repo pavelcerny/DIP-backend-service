@@ -7,13 +7,12 @@ import com.ibm.watson.developer_cloud.service.exception.BadRequestException;
 import com.ibm.watson.developer_cloud.service.exception.InternalServerErrorException;
 import com.ibm.watson.developer_cloud.service.exception.UnauthorizedException;
 import cz.cvut.fel.model.DtoFromClient;
-import cz.cvut.fel.model.Greeting;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.concurrent.atomic.AtomicLong;
-
-@RestController
+@Controller
 @RequestMapping("/poidialog")
 public class PoiDialogController {
 
@@ -24,6 +23,7 @@ public class PoiDialogController {
 
 
     @RequestMapping("/init")
+    @ResponseBody
     public MessageResponse initDialog() {
 
         ConversationService service = new ConversationService(CONVERSATION_VERSION);
@@ -59,6 +59,7 @@ public class PoiDialogController {
     }
 
     @RequestMapping(value = "/continue", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE}, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
     public MessageResponse continueDialog(@RequestBody DtoFromClient dtoFromClient) {
 
         ConversationService service = new ConversationService(CONVERSATION_VERSION);
@@ -76,5 +77,11 @@ public class PoiDialogController {
                 .execute();
 
         return response;
+    }
+
+    @RequestMapping("/poi")
+    public String poi(@RequestParam(value = "fromWatson", required=false, defaultValue = "") String fromWatson, Model model){
+        model.addAttribute("fromWatson", fromWatson);
+        return "poi";
     }
 }

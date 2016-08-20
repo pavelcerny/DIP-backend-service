@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>POI dialog</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <div id="chat">
+        <div id="from-watson">
+            <p th:text="${fromWatson}">Has no response from watson yet</p>
+        </div>
+        <form>
+            <input id="textInput"/>
+            <input type="submit" value="Odeslat"/>
+        </form>
+    </div>
+</body>
+</html>

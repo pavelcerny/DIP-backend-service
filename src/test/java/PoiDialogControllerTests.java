@@ -52,7 +52,7 @@ public class PoiDialogControllerTests {
     @Test
     public void noInputInitShouldReturnInitialResponse() throws Exception {
 
-        this.mockMvc.perform(get("/poidialog/init"))
+        this.mockMvc.perform(get("/poi/init"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.output.text[0]").value("Vítej příteli, na jakou cílovou adresu chceš navést?"));

@@ -7,13 +7,14 @@ import com.ibm.watson.developer_cloud.service.exception.BadRequestException;
 import com.ibm.watson.developer_cloud.service.exception.InternalServerErrorException;
 import com.ibm.watson.developer_cloud.service.exception.UnauthorizedException;
 import cz.cvut.fel.model.DtoFromClient;
+import cz.cvut.fel.model.DtoTextAndContext;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/poidialog")
+@RequestMapping("/poi")
 public class PoiDialogController {
 
     private static final String USERNAME = "8df4159f-bfda-48f4-9827-c331200caebd";
@@ -79,9 +80,19 @@ public class PoiDialogController {
         return response;
     }
 
-    @RequestMapping("/poi")
-    public String poi(@RequestParam(value = "fromWatson", required=false, defaultValue = "") String fromWatson, Model model){
-        model.addAttribute("fromWatson", fromWatson);
+    @RequestMapping
+    public String poi(@RequestParam(value = "inFromWatson", required=false, defaultValue = "Ahoj, kam chces?") String inFromWatson,
+                      @RequestParam(value = "inContext", required=false, defaultValue = "{'vychozizprava':'obsah'}") String inContext,
+                      Model model){
+        model.addAttribute("inFromWatson", inFromWatson)
+                .addAttribute("inContext", inContext)
+                .addAttribute("dtoTextAndContext", new DtoTextAndContext());
         return "poi";
+    }
+
+    @RequestMapping(value="/result", method=RequestMethod.POST)
+    public String greetingSubmit(@ModelAttribute DtoTextAndContext dtoTextAndContext, Model model) {
+        model.addAttribute("dtoTextAndContext", dtoTextAndContext);
+        return "result";
     }
 }

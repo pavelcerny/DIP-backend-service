@@ -38,7 +38,7 @@ import org.springframework.web.context.WebApplicationContext;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
-public class GreetingControllerTests {
+public class RestGreetingControllerTests {
 
 	@Autowired
 	private WebApplicationContext ctx;
@@ -53,7 +53,7 @@ public class GreetingControllerTests {
 	@Test
 	public void noParamGreetingShouldReturnDefaultMessage() throws Exception {
 
-		this.mockMvc.perform(get("/greeting"))
+		this.mockMvc.perform(get("/restgreeting"))
 				.andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.content").value("Hello, World!"));
@@ -62,7 +62,7 @@ public class GreetingControllerTests {
 	@Test
 	public void paramGreetingShouldReturnTailoredMessage() throws Exception {
 
-		this.mockMvc.perform(get("/greeting").param("name", "Spring Community"))
+		this.mockMvc.perform(get("/restgreeting").param("name", "Spring Community"))
 				.andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.content").value("Hello, Spring Community!"));

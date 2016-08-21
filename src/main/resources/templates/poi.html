@@ -9,11 +9,15 @@
         <div input="from-watson">
             <p th:text="${inFromWatson}">Has no response from watson yet</p>
         </div>
-        <form action="#" th:action="@{/poi/result}" th:object="${dtoTextAndContext}" method="post">
+        <form action="#" th:action="@{/poi/continue}" th:object="${dtoTextAndContext}" method="post">
             <p>input: <input type="text" th:field="*{input}" th:value="${preDefinedFromUser}"/></p>
-            <p>context: <input type="text" id="context" name="context" th:value="${inContext}" /></p>
+            <p><!--context:--> <input type="hidden" id="context" name="context" th:value="${inContext}" /></p>
 
             <p><input type="submit" value="Odeslat"/></p>
+        </form>
+
+        <form action="#" th:action="@{/poi}" method="get">
+            <p><input type="submit" value="Zresetovat"/></p>
         </form>
     </div>
 </body>

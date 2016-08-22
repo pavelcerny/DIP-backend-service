@@ -5,14 +5,23 @@ import java.util.Map;
 /**
  * Created by cerny on 19.08.2016.
  */
-public class DtoFromClient {
+public class DtoJsonObjectToWatson {
     private Map<String,Object> Input;
     private Map<String,Object> Context;
+    private String action;
 
-    public DtoFromClient() {
+    public String getAction() {
+        return action;
     }
 
-    public DtoFromClient(Map<String, Object> input, Map<String, Object> context) {
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    public DtoJsonObjectToWatson() {
+    }
+
+    public DtoJsonObjectToWatson(Map<String, Object> input, Map<String, Object> context) {
         Input = input;
         Context = context;
     }

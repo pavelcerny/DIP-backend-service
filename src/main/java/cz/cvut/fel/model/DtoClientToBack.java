@@ -1,6 +1,6 @@
 package cz.cvut.fel.model;
 
-public class DtoTextAndContext {
+public class DtoClientToBack {
 
     private String input;
     private String context;

@@ -7,6 +7,11 @@
     <artifactId>DIP-backend-service</artifactId>
     <version>0.1.0</version>
 
+    <packaging>war</packaging>
+
+    <name>DIP-backend</name>
+    <description>DIP Naviterier initial dialogue backend</description>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>

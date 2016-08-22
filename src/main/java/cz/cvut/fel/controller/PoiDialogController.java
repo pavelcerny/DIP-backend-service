@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
 import cz.cvut.fel.model.DtoBackendToClient;
 import cz.cvut.fel.model.DtoJsonObjectToWatson;
-import cz.cvut.fel.model.JsonTextAndContext;
+import cz.cvut.fel.model.JsonTextAndContextDto;
 import cz.cvut.fel.model.ReplyType;
 import cz.cvut.fel.tool.WatsonDialogTool;
 import org.springframework.http.MediaType;
@@ -31,9 +31,9 @@ public class PoiDialogController {
 
     @RequestMapping(value = "/rest/watson", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public MessageResponse continueDialogWithWatson(@RequestBody JsonTextAndContext jsonTextAndContext) {
-        String text = jsonTextAndContext.getText();
-        Map<String, Object> context = jsonTextAndContext.getContext();
+    public MessageResponse continueDialogWithWatson(@RequestBody JsonTextAndContextDto jsonTextAndContextDto) {
+        String text = jsonTextAndContextDto.getText();
+        Map<String, Object> context = jsonTextAndContextDto.getContext();
         return watsonDialogTool.continueDialogWithWatson(text, context);
     }
 
@@ -60,7 +60,7 @@ public class PoiDialogController {
         //send it to view
         model.addAttribute("forClientObject", forClientObject)
                 .addAttribute("fromClientObject", new DtoJsonObjectToWatson());
-        return "poi";
+        return "poi-dialog";
     }
 
 //    @RequestMapping(value="/continue", method=RequestMethod.POST)

@@ -8,7 +8,7 @@ import java.util.Map;
 
 /**
  * Comunicates with Watson Conversational Service
- * and returns JSON
+ * and returns Object representing JSON
  * Created by cerny on 22.08.2016.
  */
 public class WatsonDialogTool {

@@ -13,15 +13,15 @@ import java.util.Map;
  *
  * Created by cerny on 22.08.2016.
  */
-public class JsonTextAndContext implements Serializable {
+public class JsonTextAndContextDto implements Serializable {
     private String text;
     private Map<String,Object> context;
 
-    public JsonTextAndContext() {
+    public JsonTextAndContextDto() {
 
     }
 
-    public JsonTextAndContext(String text, Map<String, Object> context) {
+    public JsonTextAndContextDto(String text, Map<String, Object> context) {
 
         this.text = text;
         this.context = context;

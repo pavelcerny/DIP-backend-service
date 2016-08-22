@@ -3,13 +3,12 @@ package cz.cvut.fel.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.ibm.watson.developer_cloud.conversation.v1.ConversationService;
-import com.ibm.watson.developer_cloud.conversation.v1.model.MessageRequest;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
 import cz.cvut.fel.model.DtoBackendToClient;
 import cz.cvut.fel.model.DtoJsonObjectToWatson;
 import cz.cvut.fel.model.JsonTextAndContext;
 import cz.cvut.fel.model.ReplyType;
+import cz.cvut.fel.tool.WatsonDialogTool;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,65 +20,23 @@ import java.util.Map;
 @Controller
 @RequestMapping("/poi")
 public class PoiDialogController {
-
     private static final String WORKSPACE_ID = "e3101b6f-4808-4630-afbe-b07744997c20";
-    private static final String USERNAME = "8df4159f-bfda-48f4-9827-c331200caebd";
-    private static final String PASSWORD = "lpULJnXdW2mx";
-    private static final String CONVERSATION_VERSION = "2016-07-11";
-
+    private WatsonDialogTool watsonDialogTool = new WatsonDialogTool(WORKSPACE_ID);
 
     @RequestMapping(value = "/rest/watson", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public MessageResponse initDialogWithWatson() {
-        ConversationService service = getNewConversationService();
-        MessageRequest message = buildInitialMessage();
-        String workspaceId = WORKSPACE_ID;
-
-        return getResponse(service, message, workspaceId);
+        return watsonDialogTool.initDialogWithWatson();
     }
 
     @RequestMapping(value = "/rest/watson", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public MessageResponse continueDialogWithWatson(@RequestBody JsonTextAndContext jsonTextAndContext) {
-        ConversationService service = getNewConversationService();
-        MessageRequest newMessage = buildMessage(jsonTextAndContext.getText(), jsonTextAndContext.getContext());
-        String workspaceId = WORKSPACE_ID;
-
-        return getResponse(service, newMessage, workspaceId);
+        String text = jsonTextAndContext.getText();
+        Map<String, Object> context = jsonTextAndContext.getContext();
+        return watsonDialogTool.continueDialogWithWatson(text, context);
     }
 
-    private ConversationService getNewConversationService() {
-        ConversationService service = new ConversationService(CONVERSATION_VERSION);
-        service.setUsernameAndPassword(USERNAME, PASSWORD);
-        return service;
-    }
-
-    private MessageResponse getResponse(ConversationService service, MessageRequest newMessage, String workspaceId) {
-        return (MessageResponse) service
-                    .message(workspaceId, newMessage)
-                    .execute();
-    }
-
-    private MessageResponse continueDialogWithWatson(String text, Map<String, Object> context){
-        ConversationService service = getNewConversationService();
-        MessageRequest newMessage = buildMessage(text, context);
-        String workspaceId = WORKSPACE_ID;
-
-        return getResponse(service, newMessage, workspaceId);
-    }
-
-    private MessageRequest buildInitialMessage() {
-        return new MessageRequest.Builder()
-                .inputText("")
-                .build();
-    }
-
-    private MessageRequest buildMessage(String text, Map<String, Object> context) {
-        return new MessageRequest.Builder()
-                    .inputText(text)
-                    .context(context)
-                    .build();
-    }
 
     @RequestMapping
     public String initPoi(Model model){

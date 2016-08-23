@@ -2,53 +2,42 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>POI dialog</title>
-    <meta http-equiv="Content-Type" context="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" context="text/html; charset=UTF-8" charset="UTF-8"/>
 </head>
 <body>
-    <div id="chat">
-        <div id="from-watson">
-            <p th:text="${forClientObject.watsonOutputText}">Has no response from watson yet</p>
-        </div>
-
-        <!--
-            inReplyType = enum {input-user-reply, ........ render input field + send button
-                                predefined-user-reply .... render buttons in predefinedButtons
-                                }
-            predefinedButtons = [
-                                    Button.action - what is send to Watson
-                                          .label - what is displayed to user
-                                ]
-        -->
-
-        <div id="reply">
-            <form action="#" th:action="@{/poi/continue}" th:object="${fromClientObject}" method="post">
-                <p><!--context:--> <input type="hidden" id="context" name="context" th:value="${forClientObject.watsonOutputContext}" /></p>
-
-                <div th:switch="${forClientObject.replyType}">
-                    <div th:case="${T(cz.cvut.fel.model.ReplyType).USER_INPUT}" id="input-user-reply">
-                        <p>input: <input type="text" th:field="*{input}" placeholder="tvoje odpoved"/></p>
-                        <p><button name="action" type="submit" value="send">Odeslat vstup</button></p>
-                    </div>
-                    <div th:case="${T(cz.cvut.fel.model.ReplyType).PREDEFINED_USER_INPUT}" id="predefined-user-reply">
-                        <button th:each="button: ${forClientObject.buttons}" th:object="${button}" name="action" type="submit" th:value="${button.action}" th:text="${button.label}">Vzorový label</button>
-                    </div>
-                    <div th:case="*" id="user-reply-not-specified">
-                        <p>Warning - user replyType is not specified</p>
-                    </div>
-                </div>
-                <div id="back-buttons">
-                    <!-- allways present back buttons -->
-                    <button name="action" type="submit" value="back" >jít krok zpět</button>
-                    <button name="action" type="submit" value="reset" >zresetovat na začátek</button>
-
-                </div>
-            </form>
-
-            <form action="#" th:action="@{/poi}" method="get">
-                <p><input type="submit" value="Zresetovat"/></p>
-            </form>
-        </div>
-
+<div id="chat">
+    <div id="from-watson">
+        <p th:text="${drawInClientDto.watsonOutputText}">Has no response from watson yet</p>
     </div>
+
+    <!--
+        predefinedButtons = [
+                                Button.action - what is send to Watson
+                                      .label - what is displayed to user
+                            ]
+    -->
+
+    <div id="reply">
+        <form action="#" th:action="@{/poi/continue}" th:object="${formBackingDto}" method="post">
+            <p><!--context:--> <input type="hidden" id="context" name="context" th:value="${drawInClientDto.watsonOutputContext}" /></p>
+
+            <div th:if="${!drawInClientDto.supressUserInput}" id="input-user-reply">
+                <p>input: <input type="text" th:field="*{input}" placeholder="tvoje odpoved"/><button name="action" type="submit" value="send">Odeslat vstup</button></p>
+            </div>
+
+            <div th:each="button: ${drawInClientDto.buttons}" id="predefined-user-reply">
+                <p><button  th:object="${button}" name="action" type="submit" th:value="${button.action}" th:text="${button.label}">Vzorový label</button></p>
+            </div>
+
+            <div id="back-buttons">
+                <!-- allways present back buttons -->
+                <p><button name="action" type="submit" value="back" >zpět</button></p>
+                <p><button name="action" type="submit" value="reset" >reset</button></p>
+
+            </div>
+        </form>
+    </div>
+
+</div>
 </body>
 </html>

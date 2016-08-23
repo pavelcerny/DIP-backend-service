@@ -6,7 +6,7 @@ package cz.cvut.fel.model;
 public class DtoBackendToClient {
     private String watsonOutputText;
     private String watsonOutputContext;
-    private ReplyType replyType;
+    private boolean allowUserInput;
     private Button[] buttons;
 
     public DtoBackendToClient() {
@@ -28,12 +28,12 @@ public class DtoBackendToClient {
         this.watsonOutputContext = watsonOutputContext;
     }
 
-    public ReplyType getReplyType() {
-        return replyType;
+    public boolean getAllowUserInput() {
+        return allowUserInput;
     }
 
-    public void setReplyType(ReplyType replyType) {
-        this.replyType = replyType;
+    public void setAllowUserInput(boolean allowUserInput) {
+        this.allowUserInput = allowUserInput;
     }
 
     public Button[] getButtons() {

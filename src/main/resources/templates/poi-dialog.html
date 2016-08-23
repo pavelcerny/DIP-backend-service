@@ -22,7 +22,7 @@
             <p><!--context:--> <input type="hidden" id="context" name="context" th:value="${drawInClientDto.watsonOutputContext}" /></p>
 
             <div th:if="${!drawInClientDto.supressUserInput}" id="input-user-reply">
-                <p>input: <input type="text" th:field="*{input}" placeholder="tvoje odpoved"/><button name="action" type="submit" value="send">Odeslat vstup</button></p>
+                <p><input type="text" th:field="*{input}" placeholder="tvoje odpoveď"/><button name="action" type="submit" value="send">odpovědět</button></p>
             </div>
 
             <div th:each="button: ${drawInClientDto.buttons}" id="predefined-user-reply">

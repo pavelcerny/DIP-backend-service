@@ -41,7 +41,7 @@ public class PoiDialogController {
         return watsonDialogTool.continueDialogWithWatson(text, context);
     }
 
-    @RequestMapping("/init")
+    @RequestMapping()
     public String getDialogView(Model model) {
         //init
         MessageResponse response = initDialogWithWatson();
@@ -59,7 +59,7 @@ public class PoiDialogController {
         String inputString;
         switch (formBackingDto.getAction()){
             case "back":
-                inputString = "jít krok zpět";
+                inputString = "zpět";
                 break;
             case "reset":
                 //volej resetování

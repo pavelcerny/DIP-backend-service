@@ -5,9 +5,9 @@
 
     <groupId>cz.cvut.fel.naviterier</groupId>
     <artifactId>DIP-backend-service</artifactId>
-    <version>0.1.0</version>
+    <version>1.0.0</version>
 
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <name>DIP-backend</name>
     <description>DIP Naviterier initial dialogue backend</description>

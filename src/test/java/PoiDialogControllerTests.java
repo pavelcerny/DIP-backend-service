@@ -27,6 +27,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -52,7 +53,7 @@ public class PoiDialogControllerTests {
     @Test
     public void noInputInitShouldReturnInitialResponse() throws Exception {
 
-        this.mockMvc.perform(get("/poi/init"))
+        this.mockMvc.perform(post("/poi/rest/watson"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.output.text[0]").value("Vítej příteli, na jakou cílovou adresu chceš navést?"));
